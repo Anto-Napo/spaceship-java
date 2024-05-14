@@ -28,6 +28,7 @@ public class GamePanel extends JPanel {
     final int bulletSize = 10;
     int shootX = 0;
     int shootY = 0;
+    final int shootVelocity = 3;
     Action shootAction;
 
     GamePanel() {
@@ -94,9 +95,14 @@ public class GamePanel extends JPanel {
             keepShoot = true;
         }
         if(keepShoot) {
-            shootY -= 1;
+            shootY -= shootVelocity;
             if(shootY > 0) {
                 g2D.fillOval(shootX, shootY - bulletSize, bulletSize, bulletSize);
+                try {
+                    Thread.sleep(1); //? Less hazardous
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 repaint();
             } else {
                 keepShoot = false;
